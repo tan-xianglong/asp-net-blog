@@ -1,4 +1,5 @@
 ﻿using Blog.Models;
+using Blog.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,16 +12,20 @@ namespace Blog.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IPostRepository _postRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IPostRepository postRepository)
         {
-            _logger = logger;
+            _postRepository = postRepository;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var posts = _postRepository.AllPost; //to change to getAll method
+            return View(new HomeViewModel
+            {
+                Posts = posts
+            });
         }
 
         public IActionResult Privacy()
