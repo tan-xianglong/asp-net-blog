@@ -25,6 +25,7 @@ namespace Blog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IPostRepository, MockPostRepository>();
+            services.AddScoped<IContactRepository, MockContactRepository>();
             services.AddSession();
             services.AddControllersWithViews();
             services.AddRazorPages();
