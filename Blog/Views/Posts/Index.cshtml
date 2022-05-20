@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Post>
+@{
+    ViewData["Page"] = "post";
+    ViewData["Title"] = "Blog Posts";
+    ViewData["BackgroundImage"] = "'images/post-bg.jpg'";
+    ViewData["Header"] = "Blog Posts";
+    ViewData["SubHeader"] = "Search Posts Here";
+}
+
+<form method="get">
+    <div class="form-group">
+        <div class="input-group">
+            <input type="search" name="SearchString" value="@ViewData["CurrentFilter"]" class="form-control form-control-lg" placeholder="Search post title here" />
+            <span>
+                <button class="btn btn-light btn-lg">
+                    <i class="bi bi-search"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+</form>
+
+@foreach(var post in Model)
+{
+    <!-- Post preview-->
+    <div class="post-preview">
+        <a href="post.html">
+            <h2 class="post-title">@post.Title</h2>
+            <h3 class="post-subtitle">@post.Subtitle</h3>
+        </a>
+        <p class="post-meta">
+            Posted by
+            <a href="#!">John Doe</a>
+            on @post.CreateDate
+        </p>
+    </div>
+    <!-- Divider-->
+    <hr class="my-4" />
+}

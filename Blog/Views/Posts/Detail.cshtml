@@ -1,0 +1,10 @@
+﻿@model Post
+@{
+    ViewData["Page"] = "post";
+    ViewData["Title"] = $"Blog - {Model.Title}";
+    ViewData["BackgroundImage"] = "'images/post-bg.jpg'";
+    ViewData["Header"] = @Model.Title;
+    ViewData["PostSubHeader"] = @Model.Subtitle;
+    ViewData["PostMeta"] = $"Posted by John Doe on {Model.CreateDate}";
+}
+
