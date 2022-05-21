@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Blog.Models
 {
     public interface IPostRepository
     {
-        IEnumerable<Post> AllPost { get; }
-        IEnumerable<Post> GetPostsByName(string name);
+        Task<IEnumerable<Post>> AllPostAsync();
+        Task<IEnumerable<Post>> GetPostsByNameAsync(string name);
 
-        IEnumerable<Post> GetPostsByTag(string tag);
+        Task<IEnumerable<Post>> GetPostsByTagAsync(string tag);
 
-        Post GetPostById(int postId);
+        Task<Post> GetPostByIdAsync(int postId);
 
         Post Update(Post post);
 
@@ -17,6 +18,6 @@ namespace Blog.Models
 
         Post Delete(int postId);
 
-        int Commit();
+        Task<int> CommitAsync();
     }
 }

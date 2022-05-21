@@ -19,9 +19,9 @@ namespace Blog.Controllers
             _postRepository = postRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var posts = _postRepository.AllPost; //to change to getAll method
+            var posts = await _postRepository.AllPostAsync(); //to change to getAll method
             return View(new HomeViewModel
             {
                 Posts = posts
