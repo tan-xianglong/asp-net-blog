@@ -9,6 +9,7 @@
 
 <div class="my-5">
     <form asp-action="Edit" method="post" role="form">
+        <input type="hidden" asp-for="PostId" />
         <div class="form-floating">
             <input asp-for="Title" class="form-control" placeholder="Enter blog title..." value ="@Model.Title"/>
             <label asp-for="Title"></label>
@@ -26,6 +27,6 @@
         </div>
         <br />
         <!-- Submit Button-->
-        <button class="btn btn-primary text-uppercase disabled" id="submitButton" type="submit">Send</button>
+        <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Send</button>
     </form>
 </div>
