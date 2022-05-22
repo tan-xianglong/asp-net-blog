@@ -74,7 +74,7 @@ namespace Blog.Controllers
         public async Task<IActionResult> Edit(Post post)
         {
             try
-            {
+            {   post.CreateDate = DateTime.Now;
                 if(post.PostId > 0)
                 {
                     _postRepository.Update(post);
@@ -92,7 +92,23 @@ namespace Blog.Controllers
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(int postId)
+        {
+            try
+            {
+                var post = await _postRepository.DeleteAsync(postId);
+                await _postRepository.CommitAsync();
+                if(post == null) return NotFound();
+                TempData["message"] = $"{post.Title} deleted.";
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
         }
     }
 }
