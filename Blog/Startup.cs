@@ -28,7 +28,7 @@ namespace Blog
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IPostRepository, PostRepository>();
-            services.AddScoped<IContactRepository, MockContactRepository>();
+            services.AddScoped<IContactRepository, ContactRepository>();
             services.AddSession();
             services.AddControllersWithViews();
             services.AddRazorPages();

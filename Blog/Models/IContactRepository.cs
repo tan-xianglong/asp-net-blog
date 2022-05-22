@@ -1,20 +1,21 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Blog.Models
 {
     public interface IContactRepository
     {
-        IEnumerable<Contact> AllContact { get; }
-        IEnumerable<Contact> GetContactByName(string name);
+        Task<IEnumerable<Contact>> AllContactAsync();
+        Task<IEnumerable<Contact>> GetContactByNameAsync(string name);
 
-        Contact GetContactById(int contactId);
+        Task<Contact> GetContactByIdAsync(int contactId);
 
         Contact Update(Contact contact);
 
         Contact Add(Contact contact);
 
-        Contact Delete(int contactId);
+        Task<Contact> DeleteAsync(int contactId);
 
-        int Commit();
+        Task<int> CommitAsync();
     }
 }

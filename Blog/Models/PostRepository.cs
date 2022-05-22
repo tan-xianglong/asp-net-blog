@@ -32,9 +32,14 @@ namespace Blog.Models
             return await _appDbContext.SaveChangesAsync();
         }
 
-        public Post Delete(int postId)
+        public async Task<Post> DeleteAsync(int postId)
         {
-            throw new System.NotImplementedException();
+            var post = await GetPostByIdAsync(postId);
+            if(post != null)
+            {
+                _appDbContext.Posts.Remove(post);
+            }
+            return post;
         }
 
         public async Task<Post> GetPostByIdAsync(int postId)
@@ -46,16 +51,6 @@ namespace Blog.Models
         {
             var query = from p in _appDbContext.Posts
                         where p.Title.Contains(name) || string.IsNullOrEmpty(name)
-                        orderby p.CreateDate
-                        select p;
-
-            return await query.ToListAsync();
-        }
-
-        public async Task<IEnumerable<Post>> GetPostsByTagAsync(string tag)
-        {
-            var query = from p in _appDbContext.Posts
-                        where p.Tags.Contains(tag) || string.IsNullOrEmpty(tag)
                         orderby p.CreateDate
                         select p;
 

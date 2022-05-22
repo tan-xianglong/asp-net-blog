@@ -2,7 +2,7 @@
 
 namespace Blog.Models
 {
-    public class MockContactRepository : IContactRepository
+    public class MockContactRepository
     {
         public IEnumerable<Contact> AllContact => new List<Contact> { };
 

@@ -1,6 +1,7 @@
 ﻿using Blog.Models;
 using Blog.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Blog.Controllers
 {
@@ -15,10 +16,11 @@ namespace Blog.Controllers
         {
             _postRepository = postRepository;
         }
-        public IActionResult Index(string searchString)
+        public async Task<IActionResult> Index(string searchString)
         {
-            ViewData["CurrentFilter"] = searchString;
-            return View();
+            //ViewData["CurrentFilter"] = searchString;
+            var posts = await _postRepository.GetPostsByNameAsync(searchString);
+            return View(posts);
         }
     }
 }
