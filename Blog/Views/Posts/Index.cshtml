@@ -6,7 +6,10 @@
     ViewData["Header"] = "Blog Posts";
     ViewData["SubHeader"] = "Search Posts Here";
 }
-
+@if(@ViewBag.Message != null)
+{
+    <div class="alert alert-info">@ViewBag.Message</div>
+}
 <form method="get">
     <div class="form-group">
         <div class="input-group">
@@ -24,7 +27,7 @@
 {
     <!-- Post preview-->
     <div class="post-preview">
-        <a href="post.html">
+        <a asp-action="Detail" asp-route-postId="@post.PostId">
             <h2 class="post-title">@post.Title</h2>
             <h3 class="post-subtitle">@post.Subtitle</h3>
         </a>

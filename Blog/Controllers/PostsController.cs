@@ -20,7 +20,16 @@ namespace Blog.Controllers
         {
             //ViewData["CurrentFilter"] = searchString;
             var posts = await _postRepository.GetPostsByNameAsync(searchString);
+            ViewBag.Message = message;
             return View(posts);
         }
+
+        public async Task<IActionResult> Detail(int postId)
+        {   
+            var post = await _postRepository.GetPostByIdAsync(postId);
+            return View(post);
+        }
+
+
     }
 }

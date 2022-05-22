@@ -2,9 +2,14 @@
 @{
     ViewData["Page"] = "post";
     ViewData["Title"] = $"Blog - {Model.Title}";
-    ViewData["BackgroundImage"] = "'images/post-bg.jpg'";
-    ViewData["Header"] = @Model.Title;
-    ViewData["PostSubHeader"] = @Model.Subtitle;
+    ViewData["BackgroundImage"] = "'../images/post-bg.jpg'";
+    ViewData["Header"] = Model.Title;
+    ViewData["PostSubHeader"] = Model.Subtitle;
     ViewData["PostMeta"] = $"Posted by John Doe on {Model.CreateDate}";
 }
 
+@Model.Content
+
+<br />
+<a class="btn btn-primary text-uppercase disabled" asp-action="Edit" asp-route-postId="@Model.PostId">Edit</a>
+<button class="btn btn-danger text-uppercase disabled" id="submitButton" type="submit">Delete</button>
