@@ -49,10 +49,9 @@ namespace Blog.Models
 
         public async Task<IEnumerable<Post>> GetPostsByNameAsync(string name)
         {
-            var query = from p in _appDbContext.Posts
-                        where p.Title.Contains(name) || string.IsNullOrEmpty(name)
-                        orderby p.CreateDate
-                        select p;
+            var query = _appDbContext.Posts
+                .Where(p => p.Title.Contains(name) || string.IsNullOrEmpty(name))
+                .OrderByDescending(p => p.CreateDate);
 
             return await query.ToListAsync();
         }
