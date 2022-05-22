@@ -26,3 +26,13 @@ window.addEventListener('DOMContentLoaded', () => {
         scrollPos = currentTop;
     });
 })
+
+$('#deleteModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+    var controller = button.data('controller');
+    var primarykey = button.data('primarykey');
+    var modal = $(this);
+    modal.find('.modal-body p').text('Are you sure you want to delete this blog post?');
+    modal.find('.modal-footer form').attr('action', `/${controller}/Delete?${primarykey}=${id}`);
+});
