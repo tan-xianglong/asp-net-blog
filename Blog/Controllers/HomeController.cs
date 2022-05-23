@@ -1,4 +1,5 @@
-﻿using Blog.Models;
+﻿using Blog.Helpers;
+using Blog.Models;
 using Blog.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -19,10 +20,11 @@ namespace Blog.Controllers
             _postRepository = postRepository;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
             var posts = await _postRepository.AllPostAsync(); //to change to getAll method
-            return View(posts);
+            int pageSize = 3;
+            return View(PaginatedList<Post>.Create(posts, pageNumber ?? 1, pageSize));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

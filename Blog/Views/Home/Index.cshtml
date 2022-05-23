@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Post>
+﻿@using Blog.Helpers
+@model PaginatedList<Post>
 @{
     ViewData["Page"] = "site";
     ViewData["Title"] = "Home Page";
@@ -24,5 +25,19 @@
     <!-- Divider-->
     <hr class="my-4" />
 }
-<!-- Pager-->
-<div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+<div class="d-flex justify-content-end mb-4">
+    <a asp-action="Index"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       class="btn btn-primary text-uppercase @prevDisabled">
+        Newer Posts
+    </a>
+    <a asp-action="Index"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       class="btn btn-primary text-uppercase @nextDisabled">
+        Older Posts
+    </a>
+</div>
