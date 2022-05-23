@@ -1,4 +1,7 @@
-﻿@model Post
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model Post
 @{
     ViewData["Page"] = "post";
     ViewData["Title"] = $"Blog - {Model.Title}";
@@ -12,8 +15,11 @@
 
 <br />
 <br />
-<a class="btn btn-primary text-uppercase" asp-action="Edit" asp-route-postId="@Model.PostId">Edit</a>
-<button class="btn btn-danger text-uppercase" id="submitButton" data-toggle="modal" data-target="#deleteModal" data-controller="Posts" data-primarykey="postId" data-contenttype="blog post" data-id="@Model.PostId">
-    Delete
-</button>
-<partial name="_DeleteModal" />
+@if (SignInManager.IsSignedIn(User))
+{
+    <a class="btn btn-primary text-uppercase" asp-action="Edit" asp-route-postId="@Model.PostId">Edit</a>
+    <button class="btn btn-danger text-uppercase" id="submitButton" data-toggle="modal" data-target="#deleteModal" data-controller="Posts" data-primarykey="postId" data-contenttype="blog post" data-id="@Model.PostId">
+        Delete
+    </button>
+    <partial name="_DeleteModal" />    
+}

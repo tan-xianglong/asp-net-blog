@@ -1,6 +1,7 @@
 ﻿using Blog.Helpers;
 using Blog.Models;
 using Blog.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -57,6 +58,7 @@ namespace Blog.Controllers
             }
         }
 
+        [Authorize]
         public async Task<IActionResult> Edit(int? postId)
         {
             try
@@ -80,6 +82,7 @@ namespace Blog.Controllers
 
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Edit(Post post)
         {
@@ -105,6 +108,7 @@ namespace Blog.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Delete(int postId)
         {

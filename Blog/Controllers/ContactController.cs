@@ -1,4 +1,5 @@
 ﻿using Blog.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -43,6 +44,7 @@ namespace Blog.Controllers
             //TempData["message"] = "Your request to contact has been submitted.";
         }
 
+        [Authorize]
         public async Task<IActionResult> List(string searchString)
         {
             try
@@ -57,6 +59,7 @@ namespace Blog.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Delete(int contactId)
         {
