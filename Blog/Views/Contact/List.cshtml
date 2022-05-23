@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Contact>
+@{
+    ViewData["Page"] = "page";
+    ViewData["Title"] = "Contact List";
+    ViewData["BackgroundImage"] = "'../images/contact-bg.jpg'";
+    ViewData["Header"] = "Contact List";
+    ViewData["SubHeader"] = "Search here";
+}
+
+@if(@ViewBag.Message != null)
+{
+    <div class="alert alert-info">@ViewBag.Message</div>
+}
+<br />
+<br />
+<form method="get">
+    <div class="form-group">
+        <div class="input-group">
+            <input type="search" name="SearchString" class="form-control form-control-lg" placeholder="Search contact name here" />
+            <span>
+                <button class="btn btn-light btn-lg">
+                    <i class="bi bi-search"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+</form>
+<div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email Address</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Message</th>
+          <th scope="col">Created Date</th>
+          <th scope="col">Delete?</th>
+        </tr>
+      </thead>
+      <tbody>
+            @foreach(var contact in Model)
+            {
+                <tr>
+                    <th scope="row">@contact.ContactId</th>
+                    <td>@contact.Name</td>
+                    <td>@contact.Email</td>
+                    <td>@contact.PhoneNumber</td>
+                    <td>@contact.Message</td>
+                    <td>@contact.CreateDate</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm text-uppercase" id="submitButton" data-toggle="modal" data-target="#deleteModal" data-controller="Contact" data-primarykey="contactId" data-contenttype="contact" data-id="@contact.ContactId">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            }
+      </tbody>
+    </table>
+</div>
+<partial name="_DeleteModal" />

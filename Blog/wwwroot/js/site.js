@@ -32,7 +32,8 @@ $('#deleteModal').on('show.bs.modal', function (event) {
     var id = button.data('id');
     var controller = button.data('controller');
     var primarykey = button.data('primarykey');
+    var contentType = button.data('contenttype');
     var modal = $(this);
-    modal.find('.modal-body p').text('Are you sure you want to delete this blog post?');
+    modal.find('.modal-body p').text(`Are you sure you want to delete this ${contentType}?`);
     modal.find('.modal-footer form').attr('action', `/${controller}/Delete?${primarykey}=${id}`);
 });

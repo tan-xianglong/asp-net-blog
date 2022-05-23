@@ -1,4 +1,4 @@
-﻿@model HomeViewModel
+﻿@model IEnumerable<Post>
 @{
     ViewData["Page"] = "site";
     ViewData["Title"] = "Home Page";
@@ -7,7 +7,7 @@
     ViewData["SubHeader"] = "A Blog Theme by Start Bootstrap";
 }
 
-@foreach(var post in Model.Posts)
+@foreach(var post in Model)
 {
     <!-- Post preview-->
     <div class="post-preview">

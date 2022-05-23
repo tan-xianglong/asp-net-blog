@@ -20,7 +20,6 @@ namespace Blog.Controllers
         }
         public async Task<IActionResult> Index(string searchString)
         {
-            //ViewData["CurrentFilter"] = searchString;
             try
             {
                 var posts = await _postRepository.GetPostsByNameAsync(searchString);
@@ -29,7 +28,7 @@ namespace Blog.Controllers
             }
             catch (Exception)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
         }
 
@@ -43,7 +42,7 @@ namespace Blog.Controllers
             }
             catch (Exception)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
         }
 
@@ -65,7 +64,7 @@ namespace Blog.Controllers
             }
             catch (Exception)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
 
         }
@@ -74,7 +73,8 @@ namespace Blog.Controllers
         public async Task<IActionResult> Edit(Post post)
         {
             try
-            {   post.CreateDate = DateTime.Now;
+            {   
+                post.CreateDate = DateTime.Now;
                 if(post.PostId > 0)
                 {
                     _postRepository.Update(post);
@@ -90,7 +90,7 @@ namespace Blog.Controllers
             }
             catch (Exception)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
         }
 
@@ -107,7 +107,7 @@ namespace Blog.Controllers
             }
             catch (Exception)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
         }
     }

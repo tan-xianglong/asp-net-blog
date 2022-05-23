@@ -50,7 +50,7 @@ namespace Blog.Models
         {
             var query = from c in _appDbContext.Contacts
                         where c.Name.Contains(name) || string.IsNullOrEmpty(name)
-                        orderby c.Name
+                        orderby c.ContactId descending
                         select c;
             return await query.ToListAsync();
         }

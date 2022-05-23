@@ -20,31 +20,59 @@ namespace Blog.Controllers
 
         public IActionResult Index()
         {
-            //ViewBag.Message = message;
+            ViewBag.Message = message;
             return View();
         }
 
-        /*[HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Index(Contact newContact)
         {
             try
             {
+                newContact.CreateDate = DateTime.Now;
                 _contactRepository.Add(newContact);
-                if (await _contactRepository.Commit())
-                {
-                    ViewBag.Message = "Your request to contact has been submitted.";
-                    return View();
-
-                }
+                await _contactRepository.CommitAsync();
+                TempData["message"] = "Your request to contact has been submitted.";
+                return RedirectToAction("Index");
             }
             catch (Exception)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, "Unable to access database.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Unable to access database.");
             }
-            return BadRequest();
             
             //TempData["message"] = "Your request to contact has been submitted.";
-        }*/
+        }
+
+        public async Task<IActionResult> List(string searchString)
+        {
+            try
+            {
+                var contacts = await _contactRepository.GetContactByNameAsync(searchString);
+                ViewBag.Message = message;
+                return View(contacts);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int contactId)
+        {
+            try
+            {
+                var contact = await _contactRepository.DeleteAsync(contactId);
+                await _contactRepository.CommitAsync();
+                if (contact == null) return NotFound();
+                TempData["message"] = "Contact has been deleted.";
+                return RedirectToAction("List");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+        }
 
     }
 }

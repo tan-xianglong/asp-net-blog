@@ -22,10 +22,7 @@ namespace Blog.Controllers
         public async Task<IActionResult> Index()
         {
             var posts = await _postRepository.AllPostAsync(); //to change to getAll method
-            return View(new HomeViewModel
-            {
-                Posts = posts
-            });
+            return View(posts);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
