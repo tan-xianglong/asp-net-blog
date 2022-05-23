@@ -1,4 +1,5 @@
-﻿using Blog.Models;
+﻿using Blog.Helpers;
+using Blog.Models;
 using Blog.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,13 +19,23 @@ namespace Blog.Controllers
         {
             _postRepository = postRepository;
         }
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string currentSearch, string searchString, int? pageNumber)
         {
             try
-            {
+            {   
+                if (searchString != null)
+                {
+                    pageNumber = 1;
+                }
+                else
+                {
+                    searchString = currentSearch;
+                }
+                ViewData["CurrentSearch"] = searchString;
                 var posts = await _postRepository.GetPostsByNameAsync(searchString);
+                int pageSize = 3;
                 ViewBag.Message = message;
-                return View(posts);
+                return View(PaginatedList<Post>.Create(posts, pageNumber ?? 1, pageSize));
             }
             catch (Exception)
             {
