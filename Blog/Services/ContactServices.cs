@@ -28,6 +28,21 @@ namespace Blog.Services
             return "Your request to contact has been submitted.";
         }
 
+        public async Task<ContactListViewModel> GetContactListAsync(string searchString)
+        {
+            var contacts = await _contactRepository.GetContactByNameAsync(searchString);
+            var contactListViewModel = new ContactListViewModel
+            {
+                Contacts = contacts
+            };
+            return contactListViewModel;
+        }
 
+        public async Task<string> DeleteContactAsync(int contactId)
+        {
+            var contact = await _contactRepository.DeleteAsync(contactId);
+            await _contactRepository.CommitAsync();
+            return contact == null ? "Contact Not Found" : "Contact has been deleted.";
+        }
     }
 }

@@ -5,6 +5,6 @@ namespace Blog.Models.ViewModels.Contacts
     public class ContactListViewModel
     {
         public IEnumerable<Contact> Contacts { get; set; }
-        public string Message { get; set; }
+        public string TempMessage { get; set; }
     }
 }

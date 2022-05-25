@@ -55,8 +55,8 @@ namespace Blog.Controllers
         {
             try
             {
-                var contacts = await _contactRepository.GetContactByNameAsync(searchString);
-                ViewBag.Message = Message;
+                var contacts = await _contactServices.GetContactListAsync(searchString);
+                contacts.TempMessage = Message;
                 return View(contacts);
             }
             catch (Exception)
@@ -71,10 +71,8 @@ namespace Blog.Controllers
         {
             try
             {
-                var contact = await _contactRepository.DeleteAsync(contactId);
-                await _contactRepository.CommitAsync();
-                if (contact == null) return NotFound();
-                TempData["message"] = "Contact has been deleted.";
+                var msg = await _contactServices.DeleteContactAsync(contactId);
+                TempData["message"] = msg;
                 return RedirectToAction("List");
             }
             catch (Exception)

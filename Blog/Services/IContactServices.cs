@@ -5,6 +5,8 @@ namespace Blog.Services
 {
     public interface IContactServices
     {
+        Task<string> DeleteContactAsync(int contactId);
+        Task<ContactListViewModel> GetContactListAsync(string searchString);
         Task<string> SaveContactAsync(ContactViewModel contactViewModel);
     }
 }
