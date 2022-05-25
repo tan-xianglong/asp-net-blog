@@ -14,7 +14,7 @@ namespace Blog.Controllers
         private readonly IPostRepository _postRepository;
 
         [TempData]
-        public string message { get; set; }
+        public string Message { get; set; }
 
         public PostsController(IPostRepository postRepository)
         {
@@ -35,7 +35,7 @@ namespace Blog.Controllers
                 ViewData["CurrentSearch"] = searchString;
                 var posts = await _postRepository.GetPostsByNameAsync(searchString);
                 int pageSize = 3;
-                ViewBag.Message = message;
+                ViewBag.Message = Message;
                 return View(PaginatedList<Post>.Create(posts, pageNumber ?? 1, pageSize));
             }
             catch (Exception)

@@ -1,5 +1,6 @@
 ﻿@using Blog.Helpers
-@model PaginatedList<Post>
+@using Blog.Models.ViewModels.Home
+@model HomeViewModel
 @{
     ViewData["Page"] = "site";
     ViewData["Title"] = "Home Page";
@@ -8,7 +9,7 @@
     ViewData["SubHeader"] = "A Blog Theme by Start Bootstrap";
 }
 
-@foreach(var post in Model)
+@foreach(var post in Model.Posts)
 {
     <!-- Post preview-->
     <div class="post-preview">
@@ -26,17 +27,17 @@
     <hr class="my-4" />
 }
 @{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    var prevDisabled = !Model.Posts.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Posts.HasNextPage ? "disabled" : "";
 }
 <div class="d-flex justify-content-end mb-4">
     <a asp-action="Index"
-       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-pageNumber="@(Model.Posts.PageIndex - 1)"
        class="btn btn-primary text-uppercase @prevDisabled">
         Newer Posts
     </a>
     <a asp-action="Index"
-       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-pageNumber="@(Model.Posts.PageIndex + 1)"
        class="btn btn-primary text-uppercase @nextDisabled">
         Older Posts
     </a>
