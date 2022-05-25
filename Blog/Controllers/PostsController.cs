@@ -78,20 +78,15 @@ namespace Blog.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Edit(Post post)
+        public async Task<IActionResult> Edit(PostViewModel post)
         {
             try
-            {   
-                post.CreateDate = DateTime.Now;
-                if(post.PostId > 0)
+            {
+                if (!ModelState.IsValid)
                 {
-                    _postRepository.Update(post);
+                    return View(post);
                 }
-                else
-                {
-                    _postRepository.Add(post);
-                }
-                await _postRepository.CommitAsync();
+                await _postServices.SavePostAsync(post);
                 TempData["Message"] = "Post has been saved!";
                 return RedirectToAction("Index");
 

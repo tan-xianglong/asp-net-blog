@@ -16,6 +16,6 @@ namespace Blog.Services
 
         Task<PostViewModel> GetPostViewModelAsync(int? postId);
 
-        Task<PostViewModel> SavePostAsync(int? postId)
+        Task<int> SavePostAsync(PostViewModel postViewModel);
     }
 }

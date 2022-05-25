@@ -62,9 +62,26 @@ namespace Blog.Services
             return postViewModel;
         }
 
-        public async Task<PostViewModel> SavePostAsync(int? postId)
+        public async Task<int> SavePostAsync(PostViewModel postViewModel)
         {
-            throw new System.NotImplementedException();
+            postViewModel.CreateDate = System.DateTime.Now;
+            var post = new Post
+            {
+                PostId = postViewModel.PostId,
+                Title = postViewModel.Title,
+                Subtitle =postViewModel.Subtitle,
+                Content = postViewModel.Content,
+                CreateDate = postViewModel.CreateDate
+            };
+            if(post.PostId > 0)
+            {
+                _postRepository.Update(post);
+            }
+            else
+            {
+                _postRepository.Add(post);
+            }
+            return await _postRepository.CommitAsync();
         }
     }
 }
