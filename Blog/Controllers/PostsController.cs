@@ -47,8 +47,12 @@ namespace Blog.Controllers
         {
             try
             {
-                var post = await _postRepository.GetPostByIdAsync(postId);
-                if(post == null) return NotFound();
+                var post = await _postServices.GetPostViewModelAsync(postId);
+                if (post == null)
+                {
+                    TempData["Message"] = "Post not found.";
+                    RedirectToAction("Index");
+                }
                 return View(post);
             }
             catch (Exception)
@@ -61,17 +65,8 @@ namespace Blog.Controllers
         public async Task<IActionResult> Edit(int? postId)
         {
             try
-            {
-                Post post;
-                if (!postId.HasValue)
-                {
-                    post = new Post();
-                } 
-                else
-                {
-                    post = await _postRepository.GetPostByIdAsync(postId.Value);
-                    if (post == null) return NotFound();
-                }
+            {   var id = postId ?? null;
+                var post = await _postServices.GetPostViewModelAsync(id);
                 return View(post);
             }
             catch (Exception)
@@ -97,7 +92,7 @@ namespace Blog.Controllers
                     _postRepository.Add(post);
                 }
                 await _postRepository.CommitAsync();
-                TempData["message"] = "Post has been saved!";
+                TempData["Message"] = "Post has been saved!";
                 return RedirectToAction("Index");
 
             }

@@ -1,5 +1,6 @@
 ﻿using Blog.Helpers;
 using Blog.Models;
+using Blog.Models.ViewModels.Posts;
 using System.Threading.Tasks;
 
 namespace Blog.Services
@@ -38,5 +39,32 @@ namespace Blog.Services
             return currentSearch;
         }
 
+        public async Task<PostViewModel> GetPostViewModelAsync(int? postId)
+        {
+            PostViewModel postViewModel;
+            if(!postId.HasValue)
+            {
+                postViewModel = new PostViewModel();
+            }
+            else
+            {
+                var post = await _postRepository.GetPostByIdAsync(postId.Value);
+                postViewModel = new PostViewModel
+                    {
+                        PostId = post.PostId,
+                        Content = post.Content,
+                        Title = post.Title,
+                        Subtitle = post.Subtitle,
+                        CreateDate = post.CreateDate
+                    };
+            }
+
+            return postViewModel;
+        }
+
+        public async Task<PostViewModel> SavePostAsync(int? postId)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
