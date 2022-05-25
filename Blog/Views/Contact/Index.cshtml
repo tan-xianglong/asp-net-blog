@@ -1,4 +1,5 @@
-﻿@model Contact
+﻿@using Blog.Models.ViewModels.Contacts
+@model ContactViewModel
 @{
     ViewData["Page"] = "page";
     ViewData["Title"] = "Contact Me";
@@ -9,9 +10,9 @@
 
 <p>Want to get in touch? Fill out the form below to send me a message and I will get back to you as soon as possible!</p>
 <div class="my-5">
-    @if(@ViewBag.Message != null)
+    @if(Model.TempMessage != null)
     {
-        <div class="alert alert-info">@ViewBag.Message</div>
+        <div class="alert alert-info">@Model.TempMessage</div>
     }
     <form asp-action="Index" method="post" role="form">
         <div class="form-floating">

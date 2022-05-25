@@ -13,15 +13,13 @@ namespace Blog.Controllers
 {
     public class PostsController : Controller
     {
-        private readonly IPostRepository _postRepository;
         private readonly IPostServices _postServices;
 
         [TempData]
         public string Message { get; set; }
 
-        public PostsController(IPostRepository postRepository, IPostServices postServices)
+        public PostsController(IPostServices postServices)
         {
-            _postRepository = postRepository;
             _postServices = postServices;
         }
         public async Task<IActionResult> Index(string currentSearch, string searchString, int? pageNumber)

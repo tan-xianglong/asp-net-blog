@@ -1,4 +1,6 @@
 ﻿using Blog.Models;
+using Blog.Models.ViewModels.Contacts;
+using Blog.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,38 +12,42 @@ namespace Blog.Controllers
     public class ContactController : Controller
     {
         private readonly IContactRepository _contactRepository;
+        private readonly IContactServices _contactServices;
 
         [TempData]
-        public string message { get; set; }
+        public string Message { get; set; }
 
-        public ContactController(IContactRepository contactRepository)
+        public ContactController(IContactRepository contactRepository, IContactServices contactServices)
         {
             _contactRepository = contactRepository;
+            _contactServices = contactServices;
         }
 
         public IActionResult Index()
         {
-            ViewBag.Message = message;
-            return View();
+            return View(new ContactViewModel
+            {
+                TempMessage = Message
+            });
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(Contact newContact)
+        public async Task<IActionResult> Index(ContactViewModel newContact)
         {
             try
             {
-                newContact.CreateDate = DateTime.Now;
-                _contactRepository.Add(newContact);
-                await _contactRepository.CommitAsync();
-                TempData["message"] = "Your request to contact has been submitted.";
+                if (!ModelState.IsValid)
+                {
+                    return View(newContact);
+                }
+                var msg = await _contactServices.SaveContactAsync(newContact);
+                TempData["message"] = msg;
                 return RedirectToAction("Index");
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Unable to access database.");
-            }
-            
-            //TempData["message"] = "Your request to contact has been submitted.";
+            }            
         }
 
         [Authorize]
@@ -50,7 +56,7 @@ namespace Blog.Controllers
             try
             {
                 var contacts = await _contactRepository.GetContactByNameAsync(searchString);
-                ViewBag.Message = message;
+                ViewBag.Message = Message;
                 return View(contacts);
             }
             catch (Exception)

@@ -33,6 +33,7 @@ namespace Blog
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IContactRepository, ContactRepository>();
             services.AddScoped<IPostServices, PostServices>();
+            services.AddScoped<IContactServices, ContactServices>();
             services.AddSession();
             services.AddControllersWithViews();
             services.AddRazorPages();
