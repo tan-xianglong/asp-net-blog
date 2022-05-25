@@ -12,14 +12,31 @@ namespace Blog.Services
         {
             _postRepository = postRepository;
         }
+
         public async Task<PaginatedList<Post>> GetPaginatedPostsAsync(
             int? pageNumber,
             string searchString,
             string currentSearch)
         {
+            if(searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentSearch;
+            }
+            
             int pageSize = 3;
             var posts = await _postRepository.GetPostsByNameAsync(searchString);
             return PaginatedList<Post>.Create(posts, pageNumber ?? 1, pageSize);
         }
+
+        public string GetCurrentSearch(string searchString, string currentSearch)
+        {
+            if(searchString != null) currentSearch = searchString;
+            return currentSearch;
+        }
+
     }
 }

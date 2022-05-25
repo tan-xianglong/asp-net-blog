@@ -1,6 +1,8 @@
 ﻿using Blog.Helpers;
 using Blog.Models;
 using Blog.Models.ViewModels;
+using Blog.Models.ViewModels.Posts;
+using Blog.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,31 +14,28 @@ namespace Blog.Controllers
     public class PostsController : Controller
     {
         private readonly IPostRepository _postRepository;
+        private readonly IPostServices _postServices;
 
         [TempData]
         public string Message { get; set; }
 
-        public PostsController(IPostRepository postRepository)
+        public PostsController(IPostRepository postRepository, IPostServices postServices)
         {
             _postRepository = postRepository;
+            _postServices = postServices;
         }
         public async Task<IActionResult> Index(string currentSearch, string searchString, int? pageNumber)
         {
             try
             {   
-                if (searchString != null)
+                var posts = await _postServices.GetPaginatedPostsAsync(pageNumber, searchString, currentSearch);
+                currentSearch = _postServices.GetCurrentSearch(searchString, currentSearch);
+                return View(new PostIndexViewModel
                 {
-                    pageNumber = 1;
-                }
-                else
-                {
-                    searchString = currentSearch;
-                }
-                ViewData["CurrentSearch"] = searchString;
-                ViewBag.Message = Message;
-                var posts = await _postRepository.GetPostsByNameAsync(searchString);
-                int pageSize = 3;
-                return View(PaginatedList<Post>.Create(posts, pageNumber ?? 1, pageSize));
+                    Message = this.Message,
+                    Posts = posts,
+                    CurrentSearch = currentSearch
+                });
             }
             catch (Exception)
             {

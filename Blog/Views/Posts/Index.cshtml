@@ -8,9 +8,9 @@
     ViewData["Header"] = "Blog Posts";
     ViewData["SubHeader"] = "Search Posts Here";
 }
-@if(@ViewBag.Message != null)
+@if(Model.Message != null)
 {
-    <div class="alert alert-info">@ViewBag.Message</div>
+    <div class="alert alert-info">@Model.Message</div>
 }
 
 <a class="btn btn-primary text-uppercase" asp-action="Edit">New Post</a>
@@ -55,13 +55,13 @@
 <div class="d-flex justify-content-end mb-4">
     <a asp-action="Index"
        asp-route-pageNumber="@(Model.Posts.PageIndex - 1)"
-       asp-route-currentSearch="@ViewData["CurrentSearch"]"
+       asp-route-currentSearch="@Model.CurrentSearch"
        class="btn btn-primary text-uppercase @prevDisabled">
         Newer Posts
     </a>
     <a asp-action="Index"
        asp-route-pageNumber="@(Model.Posts.PageIndex + 1)"
-       asp-route-currentSearch="@ViewData["CurrentSearch"]"
+       asp-route-currentSearch="@Model.CurrentSearch"
        class="btn btn-primary text-uppercase @nextDisabled">
         Older Posts
     </a>

@@ -23,7 +23,7 @@ namespace Blog.Controllers
         {
             try
             {
-                var posts = await _postServices.GetPaginatedPostsAsync(pageNumber, null);
+                var posts = await _postServices.GetPaginatedPostsAsync(pageNumber, null, null);
                 return View(new HomeViewModel
                 {
                     Posts = posts
