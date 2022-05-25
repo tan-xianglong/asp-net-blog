@@ -103,10 +103,8 @@ namespace Blog.Controllers
         {
             try
             {
-                var post = await _postRepository.DeleteAsync(postId);
-                await _postRepository.CommitAsync();
-                if(post == null) return NotFound();
-                TempData["message"] = "Blog post deleted.";
+                var msg = await _postServices.DeletePostAsync(postId);
+                TempData["message"] = msg;
                 return RedirectToAction("Index");
             }
             catch (Exception)

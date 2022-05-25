@@ -83,5 +83,12 @@ namespace Blog.Services
             }
             return await _postRepository.CommitAsync();
         }
+
+        public async Task<string> DeletePostAsync(int postId)
+        {
+            var post = await _postRepository.DeleteAsync(postId);
+            await _postRepository.CommitAsync();
+            return post == null ? "Blog post not found." : "Blog post deleted.";
+        }
     }
 }

@@ -17,5 +17,7 @@ namespace Blog.Services
         Task<PostViewModel> GetPostViewModelAsync(int? postId);
 
         Task<int> SavePostAsync(PostViewModel postViewModel);
+
+        Task<string> DeletePostAsync(int postId);
     }
 }
