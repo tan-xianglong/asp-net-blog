@@ -12,7 +12,10 @@ namespace Blog.Services
         {
             _postRepository = postRepository;
         }
-        public async Task<PaginatedList<Post>> GetPaginatedPostsAsync(int? pageNumber, string searchString)
+        public async Task<PaginatedList<Post>> GetPaginatedPostsAsync(
+            int? pageNumber,
+            string searchString,
+            string currentSearch)
         {
             int pageSize = 3;
             var posts = await _postRepository.GetPostsByNameAsync(searchString);

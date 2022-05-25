@@ -2,7 +2,9 @@
 using Blog.Models.ViewModels;
 using Blog.Models.ViewModels.Home;
 using Blog.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -19,11 +21,18 @@ namespace Blog.Controllers
 
         public async Task<IActionResult> Index(int? pageNumber)
         {
-            var posts = await _postServices.GetPaginatedPostsAsync(pageNumber, null);
-            return View(new HomeViewModel
+            try
             {
-                Posts = posts
-            });
+                var posts = await _postServices.GetPaginatedPostsAsync(pageNumber, null);
+                return View(new HomeViewModel
+                {
+                    Posts = posts
+                });
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
 
         }
 

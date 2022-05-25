@@ -33,9 +33,9 @@ namespace Blog.Controllers
                     searchString = currentSearch;
                 }
                 ViewData["CurrentSearch"] = searchString;
+                ViewBag.Message = Message;
                 var posts = await _postRepository.GetPostsByNameAsync(searchString);
                 int pageSize = 3;
-                ViewBag.Message = Message;
                 return View(PaginatedList<Post>.Create(posts, pageNumber ?? 1, pageSize));
             }
             catch (Exception)
