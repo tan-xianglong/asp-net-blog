@@ -5,18 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="ViewModels\**" />
-    <Content Remove="ViewModels\**" />
-    <EmbeddedResource Remove="ViewModels\**" />
-    <None Remove="ViewModels\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="libphonenumber-csharp" Version="8.12.48" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.17" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.17" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -27,7 +17,15 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
-    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blog\Blog.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
   </ItemGroup>
 
 </Project>
