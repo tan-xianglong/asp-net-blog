@@ -1,8 +1,8 @@
-﻿using Blog.Services;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using WebAPI.Services;
 using WebAPI.ViewModels;
 
 namespace WebAPI.Controllers
@@ -11,9 +11,9 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ContactController : ControllerBase
     {
-        private readonly IContactServices _contactServices;
+        private readonly IContactServicesWebAPI _contactServices;
 
-        public ContactController(IContactServices contactServices)
+        public ContactController(IContactServicesWebAPI contactServices)
         {
             _contactServices = contactServices;
         }
@@ -28,6 +28,34 @@ namespace WebAPI.Controllers
 
                 if(contacts == null) return NotFound();
                 return Ok(contacts);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<string>> Post(ContactViewModel newContact)
+        {
+            try
+            {
+                var msg = await _contactServices.SaveContactAsync(newContact);
+                return Ok(msg);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+        }
+
+        [HttpDelete("delete/{contactId}")]
+        public async Task<ActionResult<string>> Delete(int contactId)
+        {
+            try
+            {
+                var msg = await _contactServices.DeleteContactAsync(contactId);
+                return Ok(msg);
             }
             catch (Exception)
             {

@@ -35,7 +35,7 @@ namespace WebAPI
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<AppDbContext>();
             services.AddScoped<IContactRepository, ContactRepository>();
-            services.AddScoped<IContactServices, ContactServicesWebAPI>();
+            services.AddScoped<IContactServicesWebAPI, ContactServicesWebAPI>();
             services.AddSession();
             services.AddControllers();
             services.AddSwaggerGen(c =>
