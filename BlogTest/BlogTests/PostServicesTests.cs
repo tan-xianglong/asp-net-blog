@@ -1,5 +1,4 @@
 ﻿using Blog.Models;
-using Blog.Models.ViewModels.Posts;
 using Blog.Services;
 using Moq;
 using System;
@@ -7,48 +6,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebAPI.Data;
+using WebAPI.Services;
+using WebAPI.ViewModels;
 using Xunit;
 
 namespace BlogTest.BlogTests
 {
     public class PostServicesTests
     {
-        [Fact]
-        public void GetCurrentSearch_HasNewSearch_CurrentSearchMustUpdate()
-        {
-            //Arrange
-            var postRepositoryMock = new Mock<IPostRepository>();
-
-            var newSearch = "new search";
-            var currentSearch = "current search";
-
-            var postService = new PostServices(postRepositoryMock.Object);
-            //Act
-
-            var searchString = postService.GetCurrentSearch(newSearch, currentSearch);
-            
-            //Assert
-            Assert.Equal(newSearch, searchString);
-        }
-
-        [Fact]
-        public void GetCurrentSearch_NoNewSearch_CurrentSearchRemains()
-        {
-            //Arrange
-            var postRepositoryMock = new Mock<IPostRepository>();
-
-            string newSearch = null;
-            var currentSearch = "current search";
-
-            var postService = new PostServices(postRepositoryMock.Object);
-            //Act
-
-            var searchString = postService.GetCurrentSearch(newSearch, currentSearch);
-
-            //Assert
-            Assert.Equal(currentSearch, searchString);
-        }
-
         [Fact]
         public void GetPostViewModel_ExistingPost_ReturnExistingPostViewModel()
         {
@@ -67,7 +33,7 @@ namespace BlogTest.BlogTests
                 CreateDate = DateTime.Now
             });
 
-            var postService = new PostServices(postRepositoryMock.Object);
+            var postService = new PostServicesWebAPI(postRepositoryMock.Object);
             //Act
 
             var postViewModel = postService.GetPostViewModelAsync(3);
@@ -81,14 +47,13 @@ namespace BlogTest.BlogTests
         public void GetPostViewModel_NoPostIdProvided_ReturnNewPostViewModel()
         {
             //Arrange
-            var postRepositoryMock = new Mock<IPostRepository>();
-            var postService = new PostServices(postRepositoryMock.Object);
+            var postService = new PostServices();
             //Act
 
             var postViewModel = postService.GetPostViewModelAsync(null);
 
             //Assert
-            var viewModel = Assert.IsType<PostViewModel>(postViewModel.Result);
+            var viewModel = Assert.IsType<Blog.Models.ViewModels.Posts.PostViewModel>(postViewModel.Result);
             Assert.Null(viewModel.Title);
         }
     }

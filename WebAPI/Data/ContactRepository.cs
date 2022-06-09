@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Blog.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blog.Models
+namespace WebAPI.Data
 {
     public class ContactRepository : IContactRepository
     {
@@ -13,17 +14,17 @@ namespace Blog.Models
         {
             _appDbContext = appDbContext;
         }
+        public Contact Add(Contact contact)
+        {
+            _appDbContext.Contacts.Add(contact);
+            return contact;
+        }
+
         public async Task<IEnumerable<Contact>> AllContactAsync()
         {
             return await _appDbContext.Contacts
                 .OrderByDescending(c => c.CreateDate)
                 .ToListAsync();
-        }
-
-        public Contact Add(Contact contact)
-        {
-            _appDbContext.Contacts.Add(contact);
-            return contact;
         }
 
         public async Task<int> CommitAsync()

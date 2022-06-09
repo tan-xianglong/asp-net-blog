@@ -22,17 +22,16 @@ namespace Blog.Controllers
         {
             _postServices = postServices;
         }
-        public async Task<IActionResult> Index(string currentSearch, string searchString, int? pageNumber)
+        public async Task<IActionResult> Index(string searchString, int? pageNumber)
         {
             try
             {   
-                var posts = await _postServices.GetPaginatedPostsAsync(pageNumber, searchString, currentSearch);
-                currentSearch = _postServices.GetCurrentSearch(searchString, currentSearch);
+                var posts = await _postServices.GetPaginatedPostsAsync(pageNumber, searchString);
                 return View(new PostIndexViewModel
                 {
                     Message = this.Message,
                     Posts = posts,
-                    CurrentSearch = currentSearch
+                    SearchString = searchString
                 });
             }
             catch (Exception)
@@ -59,7 +58,6 @@ namespace Blog.Controllers
             }
         }
 
-        [Authorize]
         public async Task<IActionResult> Edit(int? postId)
         {
             try
@@ -74,7 +72,6 @@ namespace Blog.Controllers
 
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Edit(PostViewModel post)
         {
@@ -84,8 +81,8 @@ namespace Blog.Controllers
                 {
                     return View(post);
                 }
-                await _postServices.SavePostAsync(post);
-                TempData["Message"] = "Post has been saved!";
+                var msg = await _postServices.SavePostAsync(post);
+                TempData["Message"] = msg;
                 return RedirectToAction("Index");
 
             }
@@ -95,7 +92,6 @@ namespace Blog.Controllers
             }
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Delete(int postId)
         {

@@ -1,4 +1,3 @@
-using Blog.Models;
 using Blog.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,11 +26,10 @@ namespace Blog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<AppDbContext>();
-            services.AddScoped<IPostRepository, PostRepository>();
-            services.AddScoped<IContactRepository, ContactRepository>();
+            //services.AddDbContext<AppDbContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<AppDbContext>();
+            //services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IPostServices, PostServices>();
             services.AddScoped<IContactServices, ContactServices>();
             services.AddSession();
@@ -58,7 +56,7 @@ namespace Blog
             app.UseRouting();
 
             app.UseAuthentication();
-            app.UseAuthorization();
+            app.UseAuthorization(); 
 
             app.UseSession();
 

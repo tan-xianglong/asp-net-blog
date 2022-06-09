@@ -9,13 +9,11 @@ namespace Blog.Services
 {
     public class ContactServices : IContactServices
     {
-        private readonly IContactRepository _contactRepository;
         private readonly HttpClient _httpClient;
-        private const string apiRoot = "http://localhost:5010";
+        private const string apiRoot = "https://localhost:5011";
 
-        public ContactServices(IContactRepository contactRepository)
+        public ContactServices()
         {
-            _contactRepository = contactRepository;
             _httpClient = new HttpClient();
         }
 

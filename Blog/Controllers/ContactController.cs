@@ -11,15 +11,13 @@ namespace Blog.Controllers
 {
     public class ContactController : Controller
     {
-        private readonly IContactRepository _contactRepository;
         private readonly IContactServices _contactServices;
 
         [TempData]
         public string Message { get; set; }
 
-        public ContactController(IContactRepository contactRepository, IContactServices contactServices)
+        public ContactController(IContactServices contactServices)
         {
-            _contactRepository = contactRepository;
             _contactServices = contactServices;
         }
 
@@ -50,7 +48,6 @@ namespace Blog.Controllers
             }            
         }
 
-        [Authorize]
         public async Task<IActionResult> List(string searchString)
         {
             try
@@ -65,7 +62,6 @@ namespace Blog.Controllers
             }
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Delete(int contactId)
         {

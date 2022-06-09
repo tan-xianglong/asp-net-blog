@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Blog.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Blog.Models
+namespace WebAPI.Data
 {
     public class PostRepository : IPostRepository
     {
@@ -14,17 +15,17 @@ namespace Blog.Models
             _appDbContext = appDbContext;
         }
 
+        public Post Add(Post post)
+        {
+            _appDbContext.Posts.Add(post);
+            return post;
+        }
+
         public async Task<IEnumerable<Post>> AllPostAsync()
         {
             return await _appDbContext.Posts
                 .OrderByDescending(p => p.CreateDate)
                 .ToListAsync();
-        }
-
-        public Post Add(Post post)
-        {
-            _appDbContext.Posts.Add(post);
-            return post;
         }
 
         public async Task<int> CommitAsync()
@@ -35,7 +36,7 @@ namespace Blog.Models
         public async Task<Post> DeleteAsync(int postId)
         {
             var post = await GetPostByIdAsync(postId);
-            if(post != null)
+            if (post != null)
             {
                 _appDbContext.Posts.Remove(post);
             }
@@ -44,14 +45,15 @@ namespace Blog.Models
 
         public async Task<Post> GetPostByIdAsync(int postId)
         {
-            return await _appDbContext.Posts.FirstOrDefaultAsync(p => p.PostId == postId);
+            return await _appDbContext.Posts
+                .FirstOrDefaultAsync(p => p.PostId == postId);
         }
 
         public async Task<IEnumerable<Post>> GetPostsByNameAsync(string name)
         {
             var query = _appDbContext.Posts
-                .Where(p => p.Title.Contains(name) || string.IsNullOrEmpty(name))
-                .OrderByDescending(p => p.CreateDate);
+    .Where(p => string.IsNullOrEmpty(name) || p.Title.Contains(name))
+    .OrderByDescending(p => p.CreateDate);
 
             return await query.ToListAsync();
         }

@@ -9,14 +9,11 @@ namespace Blog.Services
     {
         Task<PaginatedList<Post>> GetPaginatedPostsAsync(
             int? pageNumber,
-            string searchString,
-            string currentSearch);
-
-        string GetCurrentSearch(string searchString, string currentSearch);
+            string searchString);
 
         Task<PostViewModel> GetPostViewModelAsync(int? postId);
 
-        Task<int> SavePostAsync(PostViewModel postViewModel);
+        Task<string> SavePostAsync(PostViewModel postViewModel);
 
         Task<string> DeletePostAsync(int postId);
     }

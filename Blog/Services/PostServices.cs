@@ -1,42 +1,49 @@
 ﻿using Blog.Helpers;
 using Blog.Models;
 using Blog.Models.ViewModels.Posts;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Blog.Services
 {
     public class PostServices : IPostServices
     {
-        private readonly IPostRepository _postRepository;
+        private readonly HttpClient _httpClient;
+        private const string apiRoot = "https://localhost:5011";
 
-        public PostServices(IPostRepository postRepository)
+        public PostServices()
         {
-            _postRepository = postRepository;
+            _httpClient = new HttpClient();
         }
 
         public async Task<PaginatedList<Post>> GetPaginatedPostsAsync(
             int? pageNumber,
-            string searchString,
-            string currentSearch)
+            string searchString)
         {
-            if(searchString != null)
-            {
-                pageNumber = 1;
-            }
-            else
-            {
-                searchString = currentSearch;
-            }
+            if (pageNumber == null) pageNumber = 1;
             
             int pageSize = 3;
-            var posts = await _postRepository.GetPostsByNameAsync(searchString);
-            return PaginatedList<Post>.Create(posts, pageNumber ?? 1, pageSize);
-        }
 
-        public string GetCurrentSearch(string searchString, string currentSearch)
-        {
-            if(searchString != null) currentSearch = searchString;
-            return currentSearch;
+            //call into API
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                $"{apiRoot}/api/Post/list/{searchString}");
+            request.Headers.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+            var response = await _httpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            //deserialize content
+            var content = await response.Content.ReadAsStringAsync();
+            var posts = JsonSerializer.Deserialize<IEnumerable<Post>>(content,
+                new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+            return PaginatedList<Post>.Create(posts, pageNumber ?? 1, pageSize);
         }
 
         public async Task<PostViewModel> GetPostViewModelAsync(int? postId)
@@ -48,47 +55,56 @@ namespace Blog.Services
             }
             else
             {
-                var post = await _postRepository.GetPostByIdAsync(postId.Value);
-                postViewModel = new PostViewModel
+                //call into API
+                var request = new HttpRequestMessage(HttpMethod.Get,
+                    $"{apiRoot}/api/Post/detail/{postId}");
+                request.Headers.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = await _httpClient.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+
+                //deserialize content
+                var content = await response.Content.ReadAsStringAsync();
+                postViewModel = JsonSerializer.Deserialize<PostViewModel>(content,
+                    new JsonSerializerOptions
                     {
-                        PostId = post.PostId,
-                        Content = post.Content,
-                        Title = post.Title,
-                        Subtitle = post.Subtitle,
-                        CreateDate = post.CreateDate
-                    };
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    });
             }
 
             return postViewModel;
         }
 
-        public async Task<int> SavePostAsync(PostViewModel postViewModel)
+        public async Task<string> SavePostAsync(PostViewModel postViewModel)
         {
-            postViewModel.CreateDate = System.DateTime.Now;
-            var post = new Post
+            try
             {
-                PostId = postViewModel.PostId,
-                Title = postViewModel.Title,
-                Subtitle =postViewModel.Subtitle,
-                Content = postViewModel.Content,
-                CreateDate = postViewModel.CreateDate
-            };
-            if(post.PostId > 0)
-            {
-                _postRepository.Update(post);
+                var response = await _httpClient
+                    .PostAsJsonAsync($"{apiRoot}/api/Post/edit", postViewModel);
+                response.EnsureSuccessStatusCode();
+                return "Post has been saved.";
             }
-            else
+            catch (Exception)
             {
-                _postRepository.Add(post);
+                return "Post has not been saved.";
             }
-            return await _postRepository.CommitAsync();
+            //call into API
+
         }
 
         public async Task<string> DeletePostAsync(int postId)
         {
-            var post = await _postRepository.DeleteAsync(postId);
-            await _postRepository.CommitAsync();
-            return post == null ? "Blog post not found." : "Blog post deleted.";
+            try
+            {
+                // call into API
+                var response = await _httpClient.DeleteAsync($"{apiRoot}/api/Post/delete/{postId}");
+                response.EnsureSuccessStatusCode();
+                return "Blog post deleted.";
+            }
+            catch (Exception)
+            {
+                return "Blog post not found.";
+            }
         }
     }
 }

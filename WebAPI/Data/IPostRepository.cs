@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Blog.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Blog.Models
+namespace WebAPI.Data
 {
     public interface IPostRepository
     {

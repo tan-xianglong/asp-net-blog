@@ -1,4 +1,4 @@
-using Blog.Models;
+
 using Blog.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPI.Data;
 using WebAPI.Services;
 
 namespace WebAPI
@@ -36,6 +37,8 @@ namespace WebAPI
             services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<AppDbContext>();
             services.AddScoped<IContactRepository, ContactRepository>();
             services.AddScoped<IContactServicesWebAPI, ContactServicesWebAPI>();
+            services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<IPostServicesWebAPI, PostServicesWebAPI>();
             services.AddSession();
             services.AddControllers();
             services.AddSwaggerGen(c =>

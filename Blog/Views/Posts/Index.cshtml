@@ -55,13 +55,13 @@
 <div class="d-flex justify-content-end mb-4">
     <a asp-action="Index"
        asp-route-pageNumber="@(Model.Posts.PageIndex - 1)"
-       asp-route-currentSearch="@Model.CurrentSearch"
+       asp-route-searchString="@Model.SearchString"
        class="btn btn-primary text-uppercase @prevDisabled">
         Newer Posts
     </a>
     <a asp-action="Index"
        asp-route-pageNumber="@(Model.Posts.PageIndex + 1)"
-       asp-route-currentSearch="@Model.CurrentSearch"
+       asp-route-searchString="@Model.SearchString"
        class="btn btn-primary text-uppercase @nextDisabled">
         Older Posts
     </a>

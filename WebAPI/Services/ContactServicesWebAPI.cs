@@ -1,6 +1,7 @@
 ﻿using Blog.Models;
 using System;
 using System.Threading.Tasks;
+using WebAPI.Data;
 using WebAPI.ViewModels;
 
 namespace WebAPI.Services

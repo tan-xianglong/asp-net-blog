@@ -1,12 +1,13 @@
 ﻿using Blog.Helpers;
+using Blog.Models;
 
-namespace Blog.Models.ViewModels.Posts
+namespace WebAPI.ViewModels
 {
     public class PostIndexViewModel
     {
         public string Message { get; set; }
 
-        public string SearchString { get; set; }
+        public string CurrentSearch { get; set; }
 
         public PaginatedList<Post> Posts { get; set; }
     }
