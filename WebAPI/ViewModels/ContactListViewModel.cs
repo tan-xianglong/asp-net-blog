@@ -1,4 +1,4 @@
-﻿using Blog.Models;
+﻿using Data.Entities;
 using System.Collections.Generic;
 
 namespace WebAPI.ViewModels

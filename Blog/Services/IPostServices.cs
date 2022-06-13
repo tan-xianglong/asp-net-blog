@@ -1,6 +1,6 @@
-﻿using Blog.Helpers;
-using Blog.Models;
-using Blog.Models.ViewModels.Posts;
+﻿using Blog.Models.ViewModels.Posts;
+using Data.Entities;
+using Domain;
 using System.Threading.Tasks;
 
 namespace Blog.Services

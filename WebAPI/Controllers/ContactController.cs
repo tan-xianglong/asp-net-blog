@@ -11,9 +11,9 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ContactController : ControllerBase
     {
-        private readonly IContactServicesWebAPI _contactServices;
+        private readonly IContactServicesWebApi _contactServices;
 
-        public ContactController(IContactServicesWebAPI contactServices)
+        public ContactController(IContactServicesWebApi contactServices)
         {
             _contactServices = contactServices;
         }

@@ -1,16 +1,16 @@
-﻿using Blog.Models;
+﻿using Data;
+using Data.Entities;
 using System;
 using System.Threading.Tasks;
-using WebAPI.Data;
 using WebAPI.ViewModels;
 
 namespace WebAPI.Services
 {
-    public class ContactServicesWebAPI : IContactServicesWebAPI
+    public class ContactServicesWebApi : IContactServicesWebApi
     {
         private readonly IContactRepository _contactRepository;
 
-        public ContactServicesWebAPI(IContactRepository contactRepository)
+        public ContactServicesWebApi(IContactRepository contactRepository)
         {
             _contactRepository = contactRepository;
         }

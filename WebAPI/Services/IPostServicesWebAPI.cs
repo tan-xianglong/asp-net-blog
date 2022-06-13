@@ -1,11 +1,11 @@
-﻿using Blog.Models;
+﻿using Data.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebAPI.ViewModels;
 
 namespace WebAPI.Services
 {
-    public interface IPostServicesWebAPI
+    public interface IPostServicesWebApi
     {
         Task<PostViewModel> GetPostViewModelAsync(int? postId);
 

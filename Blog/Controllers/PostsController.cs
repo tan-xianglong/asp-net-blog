@@ -1,9 +1,5 @@
-﻿using Blog.Helpers;
-using Blog.Models;
-using Blog.Models.ViewModels;
-using Blog.Models.ViewModels.Posts;
+﻿using Blog.Models.ViewModels.Posts;
 using Blog.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;

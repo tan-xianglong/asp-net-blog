@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Blog.Models
+namespace Data.Entities
 {
     public class Post
     {
         public int PostId { get; set; }
-        [Required(ErrorMessage ="Please enter the title of the blog.")]
+        [Required(ErrorMessage = "Please enter the title of the blog.")]
         [StringLength(150)]
         public string Title { get; set; }
         [StringLength(150)]

@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Blog.Models
+namespace Data.Entities
 {
     public class Contact
     {
-        [BindNever]
         public int ContactId { get; set; }
 
         [Required(ErrorMessage = "Please enter your name.")]

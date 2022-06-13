@@ -1,5 +1,4 @@
-﻿
-using Blog.Models.ViewModels;
+﻿using Blog.Models.ViewModels;
 using Blog.Models.ViewModels.Home;
 using Blog.Services;
 using Microsoft.AspNetCore.Http;

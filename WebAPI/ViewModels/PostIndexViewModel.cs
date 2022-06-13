@@ -1,5 +1,5 @@
-﻿using Blog.Helpers;
-using Blog.Models;
+﻿using Data.Entities;
+using Domain;
 
 namespace WebAPI.ViewModels
 {

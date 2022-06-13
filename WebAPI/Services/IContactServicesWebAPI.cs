@@ -3,7 +3,7 @@ using WebAPI.ViewModels;
 
 namespace WebAPI.Services
 {
-    public interface IContactServicesWebAPI
+    public interface IContactServicesWebApi
     {
         Task<string> DeleteContactAsync(int contactId);
         Task<ContactListViewModel> GetContactListAsync(string searchString);

@@ -1,4 +1,4 @@
-﻿using Blog.Models;
+﻿using Data.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,9 +13,9 @@ namespace WebAPI.Controllers
     [ApiController]
     public class PostController : ControllerBase
     {
-        private readonly IPostServicesWebAPI _postServices;
+        private readonly IPostServicesWebApi _postServices;
 
-        public PostController(IPostServicesWebAPI postServices)
+        public PostController(IPostServicesWebApi postServices)
         {
             _postServices = postServices;
         }

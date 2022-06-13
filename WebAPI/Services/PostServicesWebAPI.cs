@@ -1,16 +1,17 @@
-﻿using Blog.Models;
+﻿using Data;
+using Data.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebAPI.Data;
+
 using WebAPI.ViewModels;
 
 namespace WebAPI.Services
 {
-    public class PostServicesWebAPI : IPostServicesWebAPI
+    public class PostServicesWebApi : IPostServicesWebApi
     {
         private readonly IPostRepository _postRepository;
 
-        public PostServicesWebAPI(IPostRepository postRepository)
+        public PostServicesWebApi(IPostRepository postRepository)
         {
             _postRepository = postRepository;
         }

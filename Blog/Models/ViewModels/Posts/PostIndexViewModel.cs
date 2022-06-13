@@ -1,4 +1,5 @@
-﻿using Blog.Helpers;
+﻿using Data.Entities;
+using Domain;
 
 namespace Blog.Models.ViewModels.Posts
 {
