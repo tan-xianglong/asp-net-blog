@@ -34,7 +34,8 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                x => x.MigrationsAssembly("Data")));
             services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<AppDbContext>();
             services.AddScoped<IContactRepository, ContactRepository>();
             services.AddScoped<IContactServicesWebApi, ContactServicesWebApi>();
