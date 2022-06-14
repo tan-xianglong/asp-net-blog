@@ -16,5 +16,7 @@ namespace Data.Entities
         public string Content { get; set; }
         public DateTime CreateDate { get; set; }
 
+        // New relationship property
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }
