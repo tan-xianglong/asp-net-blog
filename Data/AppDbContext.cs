@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Data
 {
@@ -56,6 +57,26 @@ namespace Data
                 PhoneNumber = "12345",
                 Message = "Please contact me.",
                 CreateDate = DateTime.Now
+            });
+
+            modelBuilder.Entity<Comment>().HasData(new Comment
+            {
+                CommentId = 1,
+                Author = "John Piper",
+                Email = "john@mail.com",
+                Body = "Nice blog.",
+                CreateDate = DateTime.Now,
+                PostId = 1
+            });
+
+            modelBuilder.Entity<Comment>().HasData(new Comment
+            {
+                CommentId = 2,
+                Author = "John Jill",
+                Email = "john@mail.com",
+                Body = "Nice blog 2.",
+                CreateDate = DateTime.Now,
+                PostId = 1
             });
         }
     }

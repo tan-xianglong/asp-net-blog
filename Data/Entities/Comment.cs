@@ -7,7 +7,7 @@ namespace Data.Entities
     public class Comment
     {
 
-        public int Id { get; set; }
+        public int CommentId { get; set; }
 
         [StringLength(50)]
         [Display(Name = "Name")]
