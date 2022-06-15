@@ -2,7 +2,6 @@
 using Data.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
 using WebAPI.ViewModels;
 
 namespace WebAPI.Services
@@ -43,7 +42,8 @@ namespace WebAPI.Services
                     Content = post.Content,
                     Title = post.Title,
                     Subtitle = post.Subtitle,
-                    CreateDate = post.CreateDate
+                    CreateDate = post.CreateDate,
+                    Comments = post.Comments
                 };
             }
 
