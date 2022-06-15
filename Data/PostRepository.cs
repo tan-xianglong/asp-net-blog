@@ -45,15 +45,15 @@ namespace Data
 
         public async Task<Post> GetPostByIdAsync(int postId)
         {
-            return await _appDbContext.Posts
+            return await _appDbContext.Posts.Include(c => c.Comments)
                 .FirstOrDefaultAsync(p => p.PostId == postId);
         }
 
         public async Task<IEnumerable<Post>> GetPostsByNameAsync(string name)
         {
             var query = _appDbContext.Posts
-    .Where(p => string.IsNullOrEmpty(name) || p.Title.Contains(name))
-    .OrderByDescending(p => p.CreateDate);
+                .Where(p => string.IsNullOrEmpty(name) || p.Title.Contains(name))
+                .OrderByDescending(p => p.CreateDate);
 
             return await query.ToListAsync();
         }
