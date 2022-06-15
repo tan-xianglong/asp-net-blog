@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Data.Entities;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebAPI.ViewModels
@@ -14,5 +16,7 @@ namespace WebAPI.ViewModels
         [Required(ErrorMessage = "Please provide the body of the blog article.")]
         public string Content { get; set; }
         public DateTime CreateDate { get; set; }
+
+        public IEnumerable<Comment> Comments { get; set; }
     }
 }
