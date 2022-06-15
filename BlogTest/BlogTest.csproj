@@ -42,6 +42,7 @@
 
   <ItemGroup>
     <Folder Include="Utilities\" />
+    <Folder Include="WebApiTests\" />
   </ItemGroup>
 
 </Project>
