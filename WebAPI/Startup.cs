@@ -41,6 +41,8 @@ namespace WebAPI
             services.AddScoped<IContactServicesWebApi, ContactServicesWebApi>();
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IPostServicesWebApi, PostServicesWebApi>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<ICommentServicesWebApi, CommentServicesWebApi>();
             services.AddSession();
             services.AddControllers();
             services.AddSwaggerGen(c =>
