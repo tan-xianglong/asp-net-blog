@@ -14,9 +14,7 @@ namespace BlogTest.DataTests
 {
     public class CommentRepositoryTests
     {
-        private CommentRepository _commentRepository;
-
-        public CommentRepositoryTests()
+        private CommentRepository CreateDefaultCommentRepository()
         {
             //Creating MockDbContext using Sqlite
             var connection = new SqliteConnection("Data Source=:memory:");
@@ -29,16 +27,17 @@ namespace BlogTest.DataTests
             mockDbContext.Database.EnsureCreated();
 
             //Initialize repository
-            _commentRepository = new CommentRepository(mockDbContext);
+            return new CommentRepository(mockDbContext);
         }
 
         [Fact]
         public async Task CommitAsync_SaveChanges_MustReturnInt()
         {
             //Arrange
+            var commentRepository = CreateDefaultCommentRepository();
 
             //Act
-            var result = await _commentRepository.CommitAsync();
+            var result = await commentRepository.CommitAsync();
 
             //Assert
             Assert.IsType<int>(result);
@@ -49,9 +48,10 @@ namespace BlogTest.DataTests
         {
             //Arrange
             var commentId = 1;
+            var commentRepository = CreateDefaultCommentRepository();
 
             //Act
-            var result = await _commentRepository.DeleteAsync(commentId);
+            var result = await commentRepository.DeleteAsync(commentId);
 
             //Assert
             Assert.IsType<Comment>(result);
@@ -62,9 +62,10 @@ namespace BlogTest.DataTests
         {
             //Arrange
             var commentId = 999;
+            var commentRepository = CreateDefaultCommentRepository();
 
             //Act
-            var result = await _commentRepository.DeleteAsync(commentId);
+            var result = await commentRepository.DeleteAsync(commentId);
 
             //Assert
             Assert.Null(result);
@@ -75,9 +76,10 @@ namespace BlogTest.DataTests
         {
             //Arrange
             var commentId = 1;
+            var commentRepository = CreateDefaultCommentRepository();
 
             //Act
-            var result = await _commentRepository.GetCommentByIdAsync(commentId);
+            var result = await commentRepository.GetCommentByIdAsync(commentId);
 
             //Assert
             Assert.IsType<Comment>(result);
@@ -88,9 +90,10 @@ namespace BlogTest.DataTests
         {
             //Arrange
             var commentId = 999;
+            var commentRepository = CreateDefaultCommentRepository();
 
             //Act
-            var result = await _commentRepository.GetCommentByIdAsync(commentId);
+            var result = await commentRepository.GetCommentByIdAsync(commentId);
 
             //Assert
             Assert.Null(result);
