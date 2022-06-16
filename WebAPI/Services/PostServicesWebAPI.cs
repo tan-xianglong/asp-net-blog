@@ -59,7 +59,7 @@ namespace WebAPI.Services
                 Subtitle = postViewModel.Subtitle,
                 Content = postViewModel.Content,
                 CreateDate = System.DateTime.Now
-        };
+            };
             if (post.PostId > 0)
             {
                 _postRepository.Update(post);
