@@ -52,15 +52,14 @@ namespace WebAPI.Services
 
         public async Task<int> SavePostAsync(PostViewModel postViewModel)
         {
-            postViewModel.CreateDate = System.DateTime.Now;
             var post = new Post
             {
                 PostId = postViewModel.PostId,
                 Title = postViewModel.Title,
                 Subtitle = postViewModel.Subtitle,
                 Content = postViewModel.Content,
-                CreateDate = postViewModel.CreateDate
-            };
+                CreateDate = System.DateTime.Now
+        };
             if (post.PostId > 0)
             {
                 _postRepository.Update(post);
