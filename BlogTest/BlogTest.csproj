@@ -10,7 +10,6 @@
     <Compile Remove="Utilities\TestDbAsyncEnumerator.cs" />
     <Compile Remove="Utilities\TestDbAsyncQueryProvider.cs" />
     <Compile Remove="WebApiTests\ContactServicesWebApiTests.cs" />
-    <Compile Remove="WebApiTests\PostServicesWebApiTests.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,7 +41,6 @@
 
   <ItemGroup>
     <Folder Include="Utilities\" />
-    <Folder Include="WebApiTests\" />
   </ItemGroup>
 
 </Project>
