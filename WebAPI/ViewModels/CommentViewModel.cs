@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebAPI.ViewModels
 {
@@ -18,7 +19,10 @@ namespace WebAPI.ViewModels
             ErrorMessage = "The email address is not entered in a correct format")]
         public string Email { get; set; }
 
-        [Required]
+        public int CommentId { get; set; }
+
+        public DateTime CreateDate { get; set; }
+
         public int PostId { get; set; }
     }
 }
