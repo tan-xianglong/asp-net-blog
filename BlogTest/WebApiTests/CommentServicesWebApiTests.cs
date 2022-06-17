@@ -2,6 +2,7 @@
 using Data.Entities;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
+using System;
 using System.Threading.Tasks;
 using WebAPI.Services;
 using WebAPI.ViewModels;
@@ -11,6 +12,21 @@ namespace BlogTest.WebApiTests
 {
     public class CommentServicesWebApiTests
     {
+        [Fact]
+        public async Task DeleteCommentAsync_ShouldCallDeleteAndCommitCommand()
+        {
+            //Arrange
+            var commentRepositoryMock = Substitute.For<ICommentRepository>();
+            var commentService = new CommentServicesWebApi(commentRepositoryMock);
+
+            //Act
+            await commentService.DeleteCommentAsync(default);
+
+            //Assert
+            await commentRepositoryMock.Received().DeleteAsync(default);
+            await commentRepositoryMock.Received().CommitAsync();
+        }
+        
         [Fact]
         public async Task DeleteCommentAsync_ExistingCommentId_ShouldReturnFoundComment()
         {
@@ -68,6 +84,28 @@ namespace BlogTest.WebApiTests
 
             //Assert
             Assert.IsType<int>(result);
+        }
+
+        [Fact]
+        public async Task SaveCommentAsync_ShouldCallAddAndCommitCommand()
+        {
+            //Arrange
+            var commentRepositoryMock = Substitute.For<ICommentRepository>();
+            var commentService = new CommentServicesWebApi(commentRepositoryMock);
+            var commentViewModelMock = new CommentViewModel
+            {
+                Author = "Author",
+                Body = "Test",
+                Email = "a@a.com",
+                PostId = 1,
+            };
+
+            //Act
+            var result = await commentService.SaveCommentAsync(commentViewModelMock);
+
+            //Assert
+            commentRepositoryMock.ReceivedWithAnyArgs().Add(default);
+            await commentRepositoryMock.Received().CommitAsync();
         }
     }
 }

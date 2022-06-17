@@ -2,6 +2,7 @@
 using Data.Entities;
 using System.Threading.Tasks;
 using WebAPI.ViewModels;
+using System;
 
 namespace WebAPI.Services
 {
@@ -28,7 +29,7 @@ namespace WebAPI.Services
                 Body = commentViewModel.Body,
                 Email = commentViewModel.Email,
                 PostId = commentViewModel.PostId,
-                CreateDate = System.DateTime.Now
+                CreateDate = DateTime.Now
             };
 
             _commentRepository.Add(comment);
