@@ -27,25 +27,23 @@ namespace BlogTest.WebApiTests
                         Title = "Test 1",
                         Subtitle = "test",
                         CreateDate = DateTime.Now,
-                        Comments = new List<Comment>
+                        Comments = new List<CommentViewModel>
                         {
-                            new Comment()
+                            new CommentViewModel()
                             {
                                 CommentId = 1,
                                 Author = "Jack",
                                 Body = "Lorem Ipsum",
                                 Email = "a@a.com",
                                 CreateDate= DateTime.Now,
-                                PostId = 1
                             },
-                            new Comment()
+                            new CommentViewModel()
                             {
                                 CommentId = 2,
                                 Author = "John",
                                 Body = "Lorem Ipsum",
                                 Email = "a@a.com",
                                 CreateDate= DateTime.Now,
-                                PostId = 1
                             }
                         }
                     }));

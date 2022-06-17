@@ -17,6 +17,6 @@ namespace WebAPI.ViewModels
         public string Content { get; set; }
         public DateTime CreateDate { get; set; }
 
-        public IEnumerable<Comment> Comments { get; set; }
+        public IEnumerable<CommentViewModel> Comments { get; set; }
     }
 }

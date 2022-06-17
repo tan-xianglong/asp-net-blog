@@ -36,6 +36,19 @@ namespace WebAPI.Services
             else
             {
                 var post = await _postRepository.GetPostByIdAsync(postId.Value);
+                var commentList = new List<CommentViewModel>();
+                foreach (var comment in post.Comments)
+                {
+                    commentList.Add(new CommentViewModel
+                    {
+                        Author = comment.Author,
+                        Body = comment.Body,
+                        Email = comment.Email,
+                        CommentId = comment.CommentId,
+                        CreateDate = comment.CreateDate,
+                        PostId = comment.PostId
+                    });
+                }
                 postViewModel = new PostViewModel
                 {
                     PostId = post.PostId,
@@ -43,7 +56,7 @@ namespace WebAPI.Services
                     Title = post.Title,
                     Subtitle = post.Subtitle,
                     CreateDate = post.CreateDate,
-                    Comments = post.Comments
+                    Comments = commentList
                 };
             }
 
