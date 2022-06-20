@@ -18,5 +18,7 @@ namespace Blog.Models.ViewModels.Posts
         public DateTime CreateDate { get; set; }
 
         public IEnumerable<CommentViewModel> Comments { get; set; }
+
+        public CommentViewModel Comment { get; set; }
     }
 }
