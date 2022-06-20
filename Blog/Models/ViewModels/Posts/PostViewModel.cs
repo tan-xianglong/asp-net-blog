@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Blog.Models.ViewModels.Comments;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Blog.Models.ViewModels.Posts
@@ -15,5 +17,6 @@ namespace Blog.Models.ViewModels.Posts
         public string Content { get; set; }
         public DateTime CreateDate { get; set; }
 
+        public IEnumerable<CommentViewModel> Comments { get; set; }
     }
 }
