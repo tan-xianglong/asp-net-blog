@@ -20,5 +20,7 @@ namespace Blog.Models.ViewModels.Posts
         public IEnumerable<CommentViewModel> Comments { get; set; }
 
         public CommentViewModel Comment { get; set; }
+
+        public string Message { get; set; }
     }
 }
