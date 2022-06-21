@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using System;
 
 namespace Blog
 {
@@ -26,6 +26,12 @@ namespace Blog
             //services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IPostServices, PostServices>();
             services.AddScoped<IContactServices, ContactServices>();
+            services.AddScoped<ICommentServices, CommentServices>();
+            services.AddHttpClient("WebApi", httpClient =>
+            {
+                httpClient.BaseAddress = new Uri("https://localhost:5011/");
+                httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
             services.AddSession();
             services.AddControllersWithViews();
             services.AddRazorPages();
