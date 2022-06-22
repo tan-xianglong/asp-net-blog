@@ -43,9 +43,10 @@ namespace Blog.Controllers
                 var post = await _postServices.GetPostViewModelAsync(postId);
                 if (post == null)
                 {
-                    TempData["Message"] = "Post not found.";
-                    RedirectToAction("Index");
+                    Message = "Post not found.";
+                    return RedirectToAction("Index");
                 }
+                post.Message = this.Message;
                 return View(post);
             }
             catch (Exception)

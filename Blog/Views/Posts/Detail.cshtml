@@ -12,8 +12,12 @@
     ViewData["PostMeta"] = $"Posted by John Doe on {Model.CreateDate}";
 }
 
-@Model.Content
+@if(Model.Message != null)
+{
+    <div class="alert alert-info">@Model.Message</div>
+}
 
+@Model.Content
 <br />
 <br />
 @*@if (SignInManager.IsSignedIn(User))
@@ -24,3 +28,55 @@
     </button>
     <partial name="_DeleteModal" />    
 @*}*@
+<br />
+<br />
+<h3 class="my-2">Comments</h3>
+<form asp-controller="Comment" asp-action="Add" method="post" role="form">
+    <input type="hidden" asp-for="Title" />
+    <input type="hidden" asp-for="Content" />
+    <input type="hidden" asp-for="PostId" value="@Model.PostId"/>
+    <input type="hidden" asp-for="Comment.PostId" value="@Model.PostId" />
+    <div class="form-floating">
+        <input asp-for="Comment.Author" class="form-control" placeholder="Enter your name..."/>
+        <label asp-for="Comment.Author"></label>
+        <span class="text-danger" asp-validation-for="Comment.Author"></span>
+    </div>
+    <div class="form-floating">
+        <input asp-for="Comment.Email" class="form-control" type="email" placeholder="Enter your email..."/>
+        <label asp-for="Comment.Email">Email address</label>
+        <span class="text-danger" asp-validation-for="Comment.Email"></span>
+    </div>
+    <div class="form-floating">
+        <textarea asp-for="Comment.Body" class="form-control" placeholder="Enter your comments here..." style="height: 10rem"></textarea>
+        <label asp-for="Comment.Body">Comments</label>
+        <span class="text-danger" asp-validation-for="Comment.Body"></span>
+    </div>
+    <!-- Submit button-->
+    <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Post</button>
+</form>
+<br />
+@foreach(var comment in Model.Comments)
+{
+    <div class="card-body p-4">
+        <div class="d-flex flex-start">
+            <div>
+                <h6 class="fw-bold mb-1">@comment.Author</h6>
+                <div class="d-flex align-items-center">
+                    <p class="m-0 font-weight-light">
+                    @comment.CreateDate.ToShortDateString()
+                    </p>
+                    <form method="post" asp-controller="Comment" asp-action="Delete" asp-route-commentId="@comment.CommentId">
+                        <button class="btn btn-link" id="submitButton">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </form>
+                </div>
+                <p class="mb-0">
+                    @comment.Body
+                </p>
+            </div>
+        </div>
+    </div>
+    <hr class="my-0" />   
+}
+

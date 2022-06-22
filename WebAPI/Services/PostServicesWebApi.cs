@@ -36,6 +36,10 @@ namespace WebAPI.Services
             else
             {
                 var post = await _postRepository.GetPostByIdAsync(postId.Value);
+                if (post == null)
+                {
+                    return null;
+                }
                 var commentList = new List<CommentViewModel>();
                 foreach (var comment in post.Comments)
                 {

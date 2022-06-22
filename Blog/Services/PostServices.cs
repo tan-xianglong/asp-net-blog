@@ -61,8 +61,11 @@ namespace Blog.Services
                 request.Headers.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = await _httpClient.SendAsync(request);
+                if(response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    return null;
+                }
                 response.EnsureSuccessStatusCode();
-
                 //deserialize content
                 var content = await response.Content.ReadAsStringAsync();
                 postViewModel = JsonSerializer.Deserialize<PostViewModel>(content,
