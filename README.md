@@ -2,7 +2,7 @@
 ## Overview
 This is a portfolio project showcasing a blog that is built on both MVC and REST API designs. The whole application is built using ASP.NET Core 5.0 with MS SQL as the persistant database. It also has Create, Read, Update and Delete features.
 
-To demonstrate the working knowledge of MVC and API designs, the front end and back end of the blog are split into 2 projects. The front end is design with ASP.NET Core MVC Web App. The MVC Web App then comsume data from ASP.NET Core 5 REST API. The designs follow the onion architecture with separation of concerns and inversion of control principles in mind.
+To demonstrate the working knowledge of MVC and API designs, the front end and back end of the blog are split into 2 projects. The front end is design with ASP.NET Core MVC Web App. The MVC Web App then consume data from ASP.NET Core 5 REST API. The designs follow the onion architecture with separation of concerns and inversion of control principles in mind.
 
 Unit testing is implemented on both MVC and API. The comment feature of the blog were added using Test Driven Development (TDD) approach.
 
